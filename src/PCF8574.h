@@ -69,7 +69,7 @@ public:
 	 * @param mode The new mode of the pin
 	 * @remarks INPUT_PULLUP does physicaly the same thing as INPUT (no software pull-up resistors available) but is REQUIRED if you use external pull-up resistor
 	 */
-	void pinMode(uint8_t pin, uint8_t mode);
+	void pinMode(uint8_t pin, uint8_t mode, bool update = true);
 
 	/**
 	 * Set the state of a pin (HIGH or LOW)

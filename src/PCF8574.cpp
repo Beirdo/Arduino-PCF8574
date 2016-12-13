@@ -38,7 +38,7 @@ void PCF8574::begin(uint8_t address) {
 	readGPIO();
 }
 
-void PCF8574::pinMode(uint8_t pin, uint8_t mode) {
+void PCF8574::pinMode(uint8_t pin, uint8_t mode, bool update) {
 
 	/* Switch according mode */
 	switch (mode) {
@@ -61,8 +61,10 @@ void PCF8574::pinMode(uint8_t pin, uint8_t mode) {
 		break;
 	}
 
-	/* Update GPIO values */
-	updateGPIO();
+	if (update) {
+		/* Update GPIO values */
+		updateGPIO();
+	{
 }
 
 void PCF8574::digitalWrite(uint8_t pin, uint8_t value) {
