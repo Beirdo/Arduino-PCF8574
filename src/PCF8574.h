@@ -47,6 +47,8 @@
 #define INPUT_PULLUP 2
 #endif
 
+#include <inttypes.h>
+
 /**
  * @brief PCF8574 Arduino class
  */

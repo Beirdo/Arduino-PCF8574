@@ -21,6 +21,7 @@
 #ifdef PCF8574_INTERRUPT_SUPPORT
 #include "PCint.h"
 #endif
+#include <inttypes.h>
 
 PCF8574::PCF8574() :
 		_PORT(0), _PIN(0), _DDR(0), _address(0)
@@ -64,7 +65,7 @@ void PCF8574::pinMode(uint8_t pin, uint8_t mode, bool update) {
 	if (update) {
 		/* Update GPIO values */
 		updateGPIO();
-	{
+	}
 }
 
 void PCF8574::digitalWrite(uint8_t pin, uint8_t value) {
