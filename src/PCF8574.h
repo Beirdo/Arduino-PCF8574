@@ -12,6 +12,8 @@
 #ifndef PCF8574_H
 #define PCF8574_H
 
+#include <stdint.h>
+
 /** Comment this define to disable interrupt support */
 #define PCF8574_INTERRUPT_SUPPORT
 
@@ -48,8 +50,14 @@ public:
      * @param pin The pin to set
      * @param value The new state of the pin
      * @remarks Software pull-up resistors are not available on the PCF8574
+     *
+     * Output   0 .. success
+     *          1 .. length to long for buffer
+     *          2 .. address send, NACK received
+     *          3 .. data send, NACK received
+     *          4 .. other twi error (lost bus arbitration, bus error, ..)
      */
-    void digitalWrite(uint8_t pin, uint8_t value);
+    uint8_t digitalWrite(uint8_t pin, uint8_t value);
 
     /**
      * Read the state of a pin
@@ -63,8 +71,14 @@ public:
      * Set the state of all pins in one go
      * 
      * @param value The new value of all pins (1 bit = 1 pin, '1' = HIGH, '0' = LOW)
+     *
+     * Output   0 .. success
+     *          1 .. length to long for buffer
+     *          2 .. address send, NACK received
+     *          3 .. data send, NACK received
+     *          4 .. other twi error (lost bus arbitration, bus error, ..)
      */
-    void write(uint8_t value);
+    uint8_t write(uint8_t value);
 
     /**
      * Read the state of all pins in one go
@@ -75,18 +89,36 @@ public:
 
     /**
      * Exactly like write(0x00), set all pins to LOW
+     *
+     * Output   0 .. success
+     *          1 .. length to long for buffer
+     *          2 .. address send, NACK received
+     *          3 .. data send, NACK received
+     *          4 .. other twi error (lost bus arbitration, bus error, ..)
      */
-    void clear();
+    uint8_t clear();
 
     /**
      * Exactly like write(0xFF), set all pins to HIGH
+     *
+     * Output   0 .. success
+     *          1 .. length to long for buffer
+     *          2 .. address send, NACK received
+     *          3 .. data send, NACK received
+     *          4 .. other twi error (lost bus arbitration, bus error, ..)
      */
-    void set();
+    uint8_t set();
 
     /**
      * Toggle the state of a pin
+     *
+     * Output   0 .. success
+     *          1 .. length to long for buffer
+     *          2 .. address send, NACK received
+     *          3 .. data send, NACK received
+     *          4 .. other twi error (lost bus arbitration, bus error, ..)
      */
-    void toggle(uint8_t pin);
+    uint8_t toggle(uint8_t pin);
 
     /**
      * Mark a pin as "pulled up"
@@ -202,8 +234,14 @@ protected:
      * 
      * @remarks Only pin marked as OUTPUT are set, for INPUT pins their value are unchanged
      * @warning To work properly (and avoid any states conflicts) readGPIO() MUST be called before call this function !
+     *
+     * Output   0 .. success
+     *          1 .. length to long for buffer
+     *          2 .. address send, NACK received
+     *          3 .. data send, NACK received
+     *          4 .. other twi error (lost bus arbitration, bus error, ..)
      */
-    void updateGPIO();
+    uint8_t updateGPIO();
 };
 
 #endif

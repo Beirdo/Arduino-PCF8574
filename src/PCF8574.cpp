@@ -69,7 +69,7 @@ void PCF8574::pinMode(uint8_t pin, uint8_t mode, bool update)
     }
 }
 
-void PCF8574::digitalWrite(uint8_t pin, uint8_t value)
+uint8_t PCF8574::digitalWrite(uint8_t pin, uint8_t value)
 {
     /* Set PORT bit value */
     if (value) {
@@ -79,7 +79,7 @@ void PCF8574::digitalWrite(uint8_t pin, uint8_t value)
     }
 
     /* Update GPIO values */
-    updateGPIO();
+    return updateGPIO();
 }
 
 uint8_t PCF8574::digitalRead(uint8_t pin)
@@ -96,13 +96,13 @@ uint8_t PCF8574::digitalRead(uint8_t pin)
     return (_PIN & (1 << pin)) ? HIGH : LOW;
 }
 
-void PCF8574::write(uint8_t value)
+uint8_t PCF8574::write(uint8_t value)
 {
     /* Store pins values and apply */
     _PORT = value;
 
     /* Update GPIO values */
-    updateGPIO();
+    return updateGPIO();
 }
 
 uint8_t PCF8574::read()
@@ -131,25 +131,25 @@ void PCF8574::pullDown(uint8_t pin)
     pinMode(pin, INPUT); // /!\ pinMode form THE LIBRARY
 }
 
-void PCF8574::clear()
+uint8_t PCF8574::clear()
 {
     /* User friendly wrapper for write() */
-    write(0x00);
+    return write(0x00);
 }
 
-void PCF8574::set()
+uint8_t PCF8574::set()
 {
     /* User friendly wrapper for write() */
-    write(0xFF);
+    return write(0xFF);
 }
 
-void PCF8574::toggle(uint8_t pin)
+uint8_t PCF8574::toggle(uint8_t pin)
 {
     /* Toggle pin state */
     _PORT ^= (1 << pin);
 
     /* Update GPIO values */
-    updateGPIO();
+    return updateGPIO();
 }
 
 void PCF8574::blink(uint8_t pin, uint16_t count, uint32_t duration)
@@ -267,7 +267,7 @@ void PCF8574::readGPIO()
     _PIN = Wire.read();
 }
 
-void PCF8574::updateGPIO()
+uint8_t PCF8574::updateGPIO()
 {
     uint8_t value = (_PIN & ~_DDR) | _PORT;
 
@@ -275,7 +275,7 @@ void PCF8574::updateGPIO()
     Wire.setClock(100000);
     Wire.beginTransmission(_address);
     Wire.write(value);
-    Wire.endTransmission();
+    return Wire.endTransmission();
 }
 
 
